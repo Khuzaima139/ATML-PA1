@@ -5,3 +5,9 @@ val_fraction: 0.2
 eval_per_class: 50
 image_size: 224
 split_file: task1/data/splits/stl10_seed6304.json
+head:
+  lr: 0.001
+  weight_decay: 0.0001
+  max_epochs: 50
+  patience: 5
+  batch_size: 128
