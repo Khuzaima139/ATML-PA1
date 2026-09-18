@@ -1,0 +1,12 @@
+/data/
+/checkpoints/
+**/cache/
+.atml_pa1/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+wandb/
+*.pth
+*.pt
+*.npy
