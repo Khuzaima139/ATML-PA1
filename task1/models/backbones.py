@@ -41,7 +41,7 @@ def load_backbones(device):
     vit = models.vit_b_16(weights=models.ViT_B_16_Weights.IMAGENET1K_V1)
     vit.heads = nn.Identity()
 
-    clip_model, _, _ = open_clip.create_model_and_transforms("ViT-B-32", pretrained="openai")
+    clip_model, _, _ = open_clip.create_model_and_transforms("ViT-B-32", pretrained="openai", force_quick_gelu=True)
     tokenizer = open_clip.get_tokenizer("ViT-B-32")
 
     backbones = {
