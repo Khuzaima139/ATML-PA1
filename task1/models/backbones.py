@@ -64,6 +64,11 @@ def clip_text_features(clip_model, tokenizer, classes, device):
 def clip_zero_shot_logits(clip_model, image_feats, text_feats):
     return clip_model.logit_scale.exp() * image_feats @ text_feats.T
 
+def clip_logit_scale():
+    clip_model, _, _ = open_clip.create_model_and_transforms(
+        "ViT-B-32", pretrained="openai", force_quick_gelu=True
+    )
+    return clip_model.logit_scale.exp().item()
 
 if __name__ == "__main__":
     from common.seed import get_device
