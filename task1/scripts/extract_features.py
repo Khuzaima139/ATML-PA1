@@ -9,10 +9,13 @@ CACHE = ROOT / "task1/cache"
 
 
 @torch.no_grad()
-def extract(backbone, dataset, device, batch_size=64):
+@torch.no_grad()
+def extract(backbone, dataset, device, transform=None, batch_size=64):
     loader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
     feats, labels = [], []
     for x, y in loader:
+        if transform is not None:
+            x = transform(x)
         feats.append(backbone(x.to(device)).cpu())
         labels.append(y)
     return torch.cat(feats), torch.cat(labels)

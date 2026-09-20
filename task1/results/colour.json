@@ -1,0 +1,81 @@
+{
+  "hue_factor": 0.5,
+  "interventions": {
+    "grayscale": {
+      "resnet50_head": {
+        "acc": 96.2,
+        "macro_f1": 96.19107524197797,
+        "mean_max_conf": 92.85029768943787,
+        "delta_acc": -1.1999999999999886,
+        "delta_macro_f1": -1.2086622827949327,
+        "conf_ratio": 0.9924471749487107,
+        "consistency": 97.2000002861023
+      },
+      "vit_b16_head": {
+        "acc": 95.8,
+        "macro_f1": 95.78677981532554,
+        "mean_max_conf": 95.33761143684387,
+        "delta_acc": -1.5999999999999943,
+        "delta_macro_f1": -1.6070207412006994,
+        "conf_ratio": 0.9929188330448416,
+        "consistency": 95.80000042915344
+      },
+      "clip_b32_head": {
+        "acc": 95.6,
+        "macro_f1": 95.59823152465832,
+        "mean_max_conf": 22.88012206554413,
+        "delta_acc": -2.4000000000000057,
+        "delta_macro_f1": -2.4028679887467064,
+        "conf_ratio": 0.9263315957490772,
+        "consistency": 96.39999866485596
+      },
+      "clip_zeroshot": {
+        "acc": 95.6,
+        "macro_f1": 95.597638627682,
+        "mean_max_conf": 93.44521760940552,
+        "delta_acc": -2.0,
+        "delta_macro_f1": -1.9856115371342327,
+        "conf_ratio": 0.9802125011105736,
+        "consistency": 95.80000042915344
+      }
+    },
+    "hue180": {
+      "resnet50_head": {
+        "acc": 94.8,
+        "macro_f1": 94.81885861975606,
+        "mean_max_conf": 93.08629035949707,
+        "delta_acc": -2.5999999999999943,
+        "delta_macro_f1": -2.5808789050168457,
+        "conf_ratio": 0.9949696252212153,
+        "consistency": 95.59999704360962
+      },
+      "vit_b16_head": {
+        "acc": 94.6,
+        "macro_f1": 94.59411595171797,
+        "mean_max_conf": 92.1113133430481,
+        "delta_acc": -2.799999999999997,
+        "delta_macro_f1": -2.7996846048082773,
+        "conf_ratio": 0.9593176960951434,
+        "consistency": 95.59999704360962
+      },
+      "clip_b32_head": {
+        "acc": 95.19999999999999,
+        "macro_f1": 95.14734160994492,
+        "mean_max_conf": 22.033026814460754,
+        "delta_acc": -2.8000000000000114,
+        "delta_macro_f1": -2.8537579034601066,
+        "conf_ratio": 0.8920358392212212,
+        "consistency": 95.20000219345093
+      },
+      "clip_zeroshot": {
+        "acc": 95.6,
+        "macro_f1": 95.5756017307924,
+        "mean_max_conf": 91.3561999797821,
+        "delta_acc": -2.0,
+        "delta_macro_f1": -2.007648434023835,
+        "conf_ratio": 0.9582993283663417,
+        "consistency": 95.99999785423279
+      }
+    }
+  }
+}

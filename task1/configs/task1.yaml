@@ -11,3 +11,5 @@ head:
   max_epochs: 50
   patience: 5
   batch_size: 128
+colour:
+  hue_factor: 0.5
