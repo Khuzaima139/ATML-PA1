@@ -4,7 +4,7 @@ import torch
 
 from task1.analysis.evaluate_bias import BACKBONES, get_probs, load_heads
 from task1.analysis.shape_bias import classify_predictions, shape_bias_and_coverage
-from task1.data.stl10 import ROOT
+from task1.data.stl10 import ROOT, cfg
 from task1.models.backbones import clip_logit_scale
 
 CACHE = ROOT / "task1/cache"
@@ -15,8 +15,9 @@ RESULTS = ROOT / "task1/results"
 def main():
     with open(RESULTS / "cue_conflicts_final.json") as f:
         final = json.load(f)
-    manifest = final["images"]
-    classes = sorted({m["shape"] for m in manifest} | {m["texture"] for m in manifest})
+        manifest = final["images"]
+        with open(ROOT / cfg["split_file"]) as f:
+            classes = json.load(f)["classes"]
 
     feats = {}
     for name in BACKBONES:
