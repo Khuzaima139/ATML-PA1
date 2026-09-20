@@ -26,3 +26,10 @@ def get_sets():
         "eval": Subset(test_full, split["eval_idx"]),
     }
     return sets, split["classes"]
+
+def load_style_pool():
+    with open(ROOT / "task1/data/style_candidates.json") as f:
+        candidates = json.load(f)
+    with open(ROOT / "task1/data/style_pool.json") as f:
+        picks = json.load(f)
+    return {name: [candidates[name][k] for k in picks[name]] for name in picks}

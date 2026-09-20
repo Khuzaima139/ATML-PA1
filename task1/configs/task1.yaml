@@ -5,11 +5,26 @@ val_fraction: 0.2
 eval_per_class: 50
 image_size: 224
 split_file: task1/data/splits/stl10_seed6304.json
+
 head:
   lr: 0.001
   weight_decay: 0.0001
   max_epochs: 50
   patience: 5
   batch_size: 128
+
 colour:
   hue_factor: 0.5
+
+cue_conflict:
+  pairs:
+    - [airplane, horse]
+    - [car, cat]
+    - [ship, deer]
+    - [truck, dog]
+    - [bird, monkey]
+  style_candidates: 30
+  style_pool_size: 5
+  pilot_alphas: [0.6, 0.8, 1.0]
+  adain_vgg: checkpoints/adain/vgg_normalised.pth
+  adain_decoder: checkpoints/adain/decoder.pth
