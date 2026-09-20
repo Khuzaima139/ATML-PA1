@@ -37,3 +37,11 @@ translation:
 
 patch_shuffle:
   grid: 4
+
+representation:
+  method: umap
+  n_neighbors: 15
+  min_dist: 0.1
+  metric: cosine
+  translation_delta: 16
+  vis_direction: right

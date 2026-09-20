@@ -1,0 +1,33 @@
+{
+  "settings": {
+    "method": "umap",
+    "n_neighbors": 15,
+    "min_dist": 0.1,
+    "metric": "cosine",
+    "translation_delta": 16,
+    "vis_direction": "right"
+  },
+  "cosine_stability": {
+    "resnet50": {
+      "grayscale": 80.03824353218079,
+      "hue180": 81.72962665557861,
+      "cue_conflict": 25.064224004745483,
+      "translation_d16": 95.05880028009415,
+      "patch_shuffle": 69.7269856929779
+    },
+    "vit_b16": {
+      "grayscale": 73.12352061271667,
+      "hue180": 68.45186948776245,
+      "cue_conflict": 26.525256037712097,
+      "translation_d16": 97.54806458950043,
+      "patch_shuffle": 62.743741273880005
+    },
+    "clip_b32": {
+      "grayscale": 88.72421979904175,
+      "hue180": 87.5043511390686,
+      "cue_conflict": 70.69990038871765,
+      "translation_d16": 96.3206097483635,
+      "patch_shuffle": 75.16083717346191
+    }
+  }
+}
