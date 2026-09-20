@@ -28,3 +28,6 @@ cue_conflict:
   pilot_alphas: [0.6, 0.8, 1.0]
   adain_vgg: checkpoints/adain/vgg_normalised.pth
   adain_decoder: checkpoints/adain/decoder.pth
+  alpha: 1.0
+  generate_per_direction: 30
+  final_per_direction: 20
