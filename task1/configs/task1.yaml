@@ -34,3 +34,6 @@ cue_conflict:
 
 translation:
   deltas: [0, 8, 16, 32]
+
+patch_shuffle:
+  grid: 4
