@@ -1,0 +1,82 @@
+[
+  {
+    "title": "all agree: shape",
+    "index": 28,
+    "id": "horse+airplane_38",
+    "direction": "horse+airplane",
+    "shape": "horse",
+    "texture": "airplane",
+    "eval_pos": 221,
+    "style_train_idx": 2934,
+    "decisions": {
+      "resnet50_head": "shape",
+      "vit_b16_head": "shape",
+      "clip_b32_head": "shape",
+      "clip_zeroshot": "shape"
+    }
+  },
+  {
+    "title": "all agree: texture",
+    "index": 180,
+    "id": "monkey+bird_05",
+    "direction": "monkey+bird",
+    "shape": "monkey",
+    "texture": "bird",
+    "eval_pos": 70,
+    "style_train_idx": 945,
+    "decisions": {
+      "resnet50_head": "texture",
+      "vit_b16_head": "texture",
+      "clip_b32_head": "texture",
+      "clip_zeroshot": "texture"
+    }
+  },
+  {
+    "title": "ResNet disagrees with CLIP zero-shot",
+    "index": 1,
+    "id": "airplane+horse_05",
+    "direction": "airplane+horse",
+    "shape": "airplane",
+    "texture": "horse",
+    "eval_pos": 477,
+    "style_train_idx": 390,
+    "decisions": {
+      "resnet50_head": "other",
+      "vit_b16_head": "other",
+      "clip_b32_head": "shape",
+      "clip_zeroshot": "shape"
+    }
+  },
+  {
+    "title": "all say other",
+    "index": 44,
+    "id": "car+cat_02",
+    "direction": "car+cat",
+    "shape": "car",
+    "texture": "cat",
+    "eval_pos": 309,
+    "style_train_idx": 1650,
+    "decisions": {
+      "resnet50_head": "other",
+      "vit_b16_head": "other",
+      "clip_b32_head": "other",
+      "clip_zeroshot": "other"
+    }
+  },
+  {
+    "title": "CLIP head vs zero-shot disagree",
+    "index": 64,
+    "id": "cat+car_47",
+    "direction": "cat+car",
+    "shape": "cat",
+    "texture": "car",
+    "eval_pos": 438,
+    "style_train_idx": 1457,
+    "decisions": {
+      "resnet50_head": "other",
+      "vit_b16_head": "other",
+      "clip_b32_head": "other",
+      "clip_zeroshot": "texture"
+    }
+  }
+]
