@@ -31,3 +31,6 @@ cue_conflict:
   alpha: 1.0
   generate_per_direction: 30
   final_per_direction: 20
+
+translation:
+  deltas: [0, 8, 16, 32]
