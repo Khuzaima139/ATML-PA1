@@ -3,82 +3,68 @@
 Usage (from the repository root):
     python -m task1.scripts.run_task1
 
-Steps that require manual input are not run here and are listed as prompts.
-All other steps are cached: rerunning is cheap once features exist.
+Hand-made inputs (style pool picks, rejection lists) are committed and must exist.
+Cue-conflict generation is skipped when the final 200 images already exist, so a rerun
+evaluates exactly the images that were judged. Every other step reuses its own caches.
 """
 
 import subprocess
 import sys
 
-from task1.data.stl10 import ROOT
+from task1.data.stl10 import ROOT, cfg
 
-# (module, description, needs_manual_input_before_it)
+FINAL_DIR = ROOT / "task1/cache/cue_conflicts_final"
+
+MANUAL_ARTIFACTS = [
+    "task1/data/style_pool.json",
+    "task1/data/cue_rejections.json",
+    "task1/data/cue_rejections_extra.json",
+]
+
+# (module, description, skip this step if this path exists)
 PIPELINE = [
-    ("task1.data.make_subset",
-     "Build the 80/20 train/val split and the 500-image evaluation subset (seed 6304)",
-     None),
-    ("task1.scripts.extract_features",
-     "Cache clean features for ResNet-50, ViT-B/16, CLIP and the CLIP text prompts",
-     None),
-    ("task1.scripts.train_heads",
-     "Train one linear head per backbone with early stopping",
-     None),
-    ("task1.scripts.run_baseline",
-     "Step 1: clean baseline (accuracy, macro-F1, mean max confidence)",
-     None),
-    ("task1.scripts.run_colour",
-     "Step 2: grayscale and 180-degree hue rotation",
-     None),
-    ("task1.data.pick_style_pool",
-     "Step 3a: render style candidate grids for manual curation",
-     None),
-    ("task1.scripts.adain_pilot",
-     "Step 3b: alpha pilot figure (alpha was fixed to 1.0 from this figure)",
-     "task1/data/style_pool.json must contain 5 curated indices per class"),
-    ("task1.data.make_cue_conflicts",
-     "Step 3c: generate the first 300 cue-conflict candidates and review grids",
-     None),
-    ("task1.data.make_cue_conflicts_extra",
-     "Step 3d: generate 200 further candidates from the unused evaluation images",
-     None),
-    ("task1.data.finalize_cue_conflicts",
-     "Step 3e: apply the rejection lists and subsample to 20 per direction",
-     "task1/data/cue_rejections.json and cue_rejections_extra.json must list rejected indices"),
-    ("task1.scripts.extract_cue_features",
-     "Step 3f: cache features for the 200 final cue conflicts",
-     None),
-    ("task1.scripts.run_cue_conflict",
-     "Step 3g: shape bias, coverage and shape/texture/other counts",
-     None),
-    ("task1.scripts.cue_failure_cases",
-     "Step 3h: informative agreement, disagreement and failure examples",
-     None),
-    ("task1.scripts.run_translation",
-     "Step 4: translation by 0, 8, 16, 32 px averaged over four cardinal directions",
-     None),
-    ("task1.scripts.run_patch_shuffle",
-     "Step 5: 4x4 patch shuffle with one non-identity permutation per image",
-     None),
-    ("task1.scripts.run_representation",
-     "Step 6: cosine stability and the UMAP projection of clean vs transformed features",
-     None),
+    ("task1.data.make_subset", "Splits and 500-image evaluation subset", None),
+    ("task1.scripts.extract_features", "Clean features for all backbones and CLIP prompts", None),
+    ("task1.scripts.train_heads", "Linear heads with early stopping", None),
+    ("task1.scripts.run_baseline", "Step 1: clean baseline", None),
+    ("task1.scripts.run_colour", "Step 2: grayscale and hue rotation", None),
+    ("task1.data.pick_style_pool", "Step 3: style candidate grids",
+     ROOT / "task1/data/style_candidates.json"),
+    ("task1.scripts.adain_pilot", "Step 3: alpha pilot figure",
+     ROOT / "task1/results/adain_pilot.png"),
+    ("task1.data.make_cue_conflicts", "Step 3: first 300 candidates", FINAL_DIR),
+    ("task1.data.make_cue_conflicts_extra", "Step 3: extra 200 candidates", FINAL_DIR),
+    ("task1.data.finalize_cue_conflicts", "Step 3: apply rejections, keep 20 per direction", FINAL_DIR),
+    ("task1.scripts.extract_cue_features", "Step 3: features for the 200 conflicts", None),
+    ("task1.scripts.run_cue_conflict", "Step 3: shape bias and coverage", None),
+    ("task1.scripts.cue_failure_cases", "Step 3: failure case figure", None),
+    ("task1.scripts.run_translation", "Step 4: translation curve", None),
+    ("task1.scripts.run_patch_shuffle", "Step 5: patch shuffle", None),
+    ("task1.scripts.run_representation", "Step 6: cosine stability and UMAP", None),
 ]
 
 
+def exists(path):
+    return path.exists() and (path.is_file() or any(path.iterdir()))
+
+
 def main():
-    print(f"repository root: {ROOT}\n")
-    for module, description, manual in PIPELINE:
-        if manual:
-            print(f"--- MANUAL STEP REQUIRED BEFORE {module}")
-            print(f"    {manual}\n")
-        print(f"=== {module}")
-        print(f"    {description}")
+    missing = [p for p in MANUAL_ARTIFACTS if not (ROOT / p).exists()]
+    if missing:
+        sys.exit(f"missing hand-made files, cannot reproduce: {missing}")
+    for key in ("adain_vgg", "adain_decoder"):
+        if not (ROOT / cfg["cue_conflict"][key]).exists():
+            sys.exit("AdaIN weights missing from checkpoints/adain, see README for download commands")
+
+    for module, description, skip_if in PIPELINE:
+        if skip_if is not None and exists(skip_if):
+            print(f"=== skip {module} ({skip_if.relative_to(ROOT)} exists)")
+            continue
+        print(f"=== {module}: {description}")
         result = subprocess.run([sys.executable, "-m", module], cwd=ROOT)
         if result.returncode != 0:
-            print(f"\nFAILED: {module} exited with code {result.returncode}")
-            sys.exit(result.returncode)
-        print()
-    print("Task 1 pipeline complete. Results are in task1/results/ and report/figures/.")
+            sys.exit(f"FAILED: {module} exited with code {result.returncode}")
+    print("Task 1 pipeline complete. Results in task1/results/, figures in report/figures/.")
 
 
 if __name__ == "__main__":
