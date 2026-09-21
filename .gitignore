@@ -11,3 +11,4 @@ wandb/
 *.pt
 *.npy
 ATML-PA1.pdf
+/notes/
