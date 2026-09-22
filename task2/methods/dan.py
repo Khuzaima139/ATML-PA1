@@ -8,7 +8,7 @@ def multi_rbf_mmd2(x, y, multipliers=(0.5, 1.0, 2.0)):
     sq = (z * z).sum(1)
     d2 = (sq[:, None] + sq[None, :] - 2 * z @ z.T).clamp_min(0)
     i, j = torch.triu_indices(len(z), len(z), offset=1, device=z.device)
-    median = d2[i, j].median().detach()
+    median = d2[i, j].median()
     k = sum(torch.exp(-d2 / (m * median)) for m in multipliers)
     n = len(x)
     return k[:n, :n].mean() + k[n:, n:].mean() - 2 * k[:n, n:].mean()
