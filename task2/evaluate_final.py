@@ -14,8 +14,9 @@ from task2.models.backbone import Backbone
 from task2.models.classifier_head import ClassifierHead
 from task2.train import ROOT
 
-MAIN = ["source_only", "dan", "dann", "cdan"]
+MAIN = ["source_only", "dan", "dann_l2", "cdan_l2"]
 STUDY = ["dan_lambda0.1", "dan_lambda10"]
+SPECIFIED = ["dann", "cdan"]
 
 
 def load(run, device):
@@ -34,7 +35,7 @@ def main():
     sep_src, sep_tgt = separability_sets()
 
     results = {}
-    for run in MAIN + STUDY:
+    for run in MAIN + STUDY + SPECIFIED:
         backbone, head, epoch = load(run, device)
         val = source_val_metrics(backbone, head, val_loaders, device)
         y, pred = predict(backbone, head, tgt_loader, device)
@@ -54,7 +55,7 @@ def main():
 
     print(f"\n{'run':14s} " + " ".join(f"{d[:5]:>11s}" for d in SOURCES)
           + f" {'mean acc/F1':>12s} {'sketch acc/F1':>14s} {'d acc':>6s} {'sep':>6s}")
-    for run in MAIN + STUDY:
+    for run in MAIN + STUDY + SPECIFIED:
         r = results[run]
         doms = " ".join(f"{r['source_val'][d]['acc']:5.1f}/{r['source_val'][d]['macro_f1']:5.1f}" for d in SOURCES)
         m, t = r["source_val"]["mean"], r["target"]
@@ -66,7 +67,7 @@ def main():
     for c, name in enumerate(CLASSES):
         wrong, n = dominant_confusion(base_cm, c)
         print(f"  source_only {name:9s} {base_acc[name]:5.1f}  -> {wrong} ({n})")
-    for run in MAIN[1:] + STUDY:
+    for run in MAIN[1:] + STUDY + SPECIFIED:
         print(f" {run}")
         acc, cm = results[run]["target_classes"]["acc"], results[run]["target_classes"]["confusion"]
         for c, name in enumerate(CLASSES):

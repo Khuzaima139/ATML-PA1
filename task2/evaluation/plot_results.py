@@ -10,7 +10,7 @@ from task2.train import ROOT
 RESULTS = ROOT / "task2" / "results"
 FIGURES = ROOT / "report" / "figures"
 MAIN = [("source_only", "Source-only", None), ("dan", "DAN", "mmd"),
-        ("dann", "DANN", "domain"), ("cdan", "CDAN", "domain")]
+        ("dann_l2", "DANN (L2 disc. input)", "domain"), ("cdan_l2", "CDAN (L2 disc. input)", "domain")]
 LAMBDAS = [(0.1, "dan_lambda0.1"), (1.0, "dan"), (10.0, "dan_lambda10")]
 
 
