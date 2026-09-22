@@ -1,0 +1,29 @@
+{
+ "name": "erm",
+ "checkpoint": "checkpoints/task2/source_only.pt",
+ "epoch": 5,
+ "val": {
+  "photo": {
+   "acc": 97.60479041916167,
+   "macro_f1": 97.27936412870044
+  },
+  "art_painting": {
+   "acc": 91.46341463414635,
+   "macro_f1": 91.55607441132433
+  },
+  "cartoon": {
+   "acc": 93.60341151385929,
+   "macro_f1": 94.06582207376645
+  },
+  "mean": {
+   "acc": 94.22387218905577,
+   "macro_f1": 94.30042020459707
+  },
+  "worst": {
+   "acc": 91.46341463414635,
+   "acc_domain": "art_painting",
+   "macro_f1": 91.55607441132433,
+   "macro_f1_domain": "art_painting"
+  }
+ }
+}
