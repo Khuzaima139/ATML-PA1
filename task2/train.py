@@ -13,15 +13,18 @@ from common.seed import get_device, set_seed
 from shared.pacs import source_dataset, target_dataset
 from shared.pacs_protocol import CLASSES, SOURCES
 from task2.evaluation.metrics import source_val_metrics
-from task2.methods.dan import DAN
 from task2.methods.cdan import CDAN
+from task2.methods.cdan_l2 import CDANL2
+from task2.methods.dan import DAN
 from task2.methods.dann import DANN
+from task2.methods.dann_l2 import DANNL2
 from task2.methods.source_only import SourceOnly
 from task2.models.backbone import Backbone, set_train_mode
 from task2.models.classifier_head import ClassifierHead
 
 ROOT = Path(__file__).resolve().parents[1]
-METHODS = {"source_only": SourceOnly, "dan": DAN, "dann": DANN, "cdan": CDAN}
+METHODS = {"source_only": SourceOnly, "dan": DAN, "dann": DANN, "cdan": CDAN,
+           "dann_l2": DANNL2, "cdan_l2": CDANL2}
 
 def load_config(path):
     cfg = yaml.safe_load((ROOT / "task2" / "configs" / "base.yaml").read_text())
