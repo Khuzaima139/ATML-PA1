@@ -1,0 +1,32 @@
+{
+ "erm": {
+  "epoch": 5,
+  "separability": 86.04651162790698,
+  "feature_norm": 71.58580017089844,
+  "feature_std": 2.2512195110321045
+ },
+ "dan_dg": {
+  "epoch": 8,
+  "separability": 74.4186046511628,
+  "feature_norm": 66.63720703125,
+  "feature_std": 2.045248031616211
+ },
+ "sam": {
+  "epoch": 11,
+  "separability": 83.38870431893687,
+  "feature_norm": 44.42863082885742,
+  "feature_std": 1.6634453535079956
+ },
+ "dan_dg_lambda0.1": {
+  "epoch": 5,
+  "separability": 82.05980066445183,
+  "feature_norm": 55.7218132019043,
+  "feature_std": 1.6602957248687744
+ },
+ "dan_dg_lambda10": {
+  "epoch": 2,
+  "separability": 70.09966777408638,
+  "feature_norm": 115.20281982421875,
+  "feature_std": 1.149033546447754
+ }
+}
