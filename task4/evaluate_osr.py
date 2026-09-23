@@ -83,7 +83,7 @@ def roc_figure(us):
 
 
 def failure_figure(cases, tau):
-    fig, axes = plt.subplots(2, 8, figsize=(14, 4.6))
+    fig, axes = plt.subplots(2, 8, figsize=(14, 6.2))
     for row, group in zip(axes, ["near", "far"]):
         ds = unknowns(group, None)
         for ax in row:
