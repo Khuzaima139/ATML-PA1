@@ -1,0 +1,445 @@
+{
+  "table1": [
+    {
+      "model": "vanilla",
+      "score": "MSP",
+      "csa": 94.71000000000001,
+      "auroc_near": 80.64601875000001,
+      "auroc_far": 88.22275,
+      "auroc_all": 84.43438437500001,
+      "tau": 0.14649586155422448,
+      "test_accept": 94.73,
+      "near_reject": 30.125,
+      "far_reject": 41.125,
+      "all_reject": 35.625
+    },
+    {
+      "model": "vanilla",
+      "score": "MLS",
+      "csa": 94.71000000000001,
+      "auroc_near": 78.9629375,
+      "auroc_far": 86.467075,
+      "auroc_all": 82.71500625,
+      "tau": -5.994174885749816,
+      "test_accept": 94.55,
+      "near_reject": 33.875,
+      "far_reject": 47.5,
+      "all_reject": 40.6875
+    },
+    {
+      "model": "vanilla",
+      "score": "Energy",
+      "csa": 94.71000000000001,
+      "auroc_near": 78.96375624999999,
+      "auroc_far": 86.4473625,
+      "auroc_all": 82.705559375,
+      "tau": -6.183838788622997,
+      "test_accept": 94.44,
+      "near_reject": 33.75,
+      "far_reject": 48.875,
+      "all_reject": 41.3125
+    },
+    {
+      "model": "vanilla",
+      "score": "Mahalanobis",
+      "csa": 94.71000000000001,
+      "auroc_near": 79.63999375,
+      "auroc_far": 91.848425,
+      "auroc_all": 85.744209375,
+      "tau": 2829.693844197392,
+      "test_accept": 94.49,
+      "near_reject": 30.25,
+      "far_reject": 54.625,
+      "all_reject": 42.43749999999999
+    }
+  ],
+  "table2": [
+    {
+      "model": "vanilla",
+      "score": "MLS",
+      "csa": 94.71000000000001,
+      "auroc_near": 78.9629375,
+      "auroc_far": 86.467075,
+      "auroc_all": 82.71500625,
+      "tau": -5.994174885749816,
+      "test_accept": 94.55,
+      "near_reject": 33.875,
+      "far_reject": 47.5,
+      "all_reject": 40.6875
+    },
+    {
+      "model": "gcsc",
+      "score": "MLS",
+      "csa": 95.46,
+      "auroc_near": 81.93262499999999,
+      "auroc_far": 90.714225,
+      "auroc_all": 86.32342500000001,
+      "tau": -6.156097555160522,
+      "test_accept": 94.78999999999999,
+      "near_reject": 35.375,
+      "far_reject": 59.75,
+      "all_reject": 47.5625
+    },
+    {
+      "model": "proser",
+      "score": "MLS",
+      "csa": 94.46,
+      "auroc_near": 79.18719374999998,
+      "auroc_far": 85.86435,
+      "auroc_all": 82.525771875,
+      "tau": -4.97792625427246,
+      "test_accept": 94.76,
+      "near_reject": 31.125,
+      "far_reject": 41.75,
+      "all_reject": 36.4375
+    },
+    {
+      "model": "proser",
+      "score": "Placeholder",
+      "csa": 94.46,
+      "auroc_near": 76.90931875000001,
+      "auroc_far": 86.9896125,
+      "auroc_all": 81.949465625,
+      "tau": 5.9922993421676626e-05,
+      "test_accept": 94.64,
+      "near_reject": 30.875,
+      "far_reject": 43.375,
+      "all_reject": 37.125
+    }
+  ],
+  "vanilla_mls_tau": -5.994174885749816,
+  "accepted_by_class": {
+    "near": {
+      "bus": {
+        "accepted": 80,
+        "of": 100,
+        "predicted": {
+          "truck": 66,
+          "automobile": 12,
+          "airplane": 1,
+          "horse": 1
+        }
+      },
+      "camel": {
+        "accepted": 48,
+        "of": 100,
+        "predicted": {
+          "bird": 12,
+          "dog": 12,
+          "deer": 11,
+          "horse": 9,
+          "airplane": 2,
+          "frog": 1,
+          "cat": 1
+        }
+      },
+      "fox": {
+        "accepted": 67,
+        "of": 100,
+        "predicted": {
+          "cat": 28,
+          "deer": 19,
+          "dog": 14,
+          "horse": 2,
+          "frog": 2,
+          "airplane": 1,
+          "bird": 1
+        }
+      },
+      "leopard": {
+        "accepted": 59,
+        "of": 100,
+        "predicted": {
+          "cat": 25,
+          "frog": 22,
+          "deer": 8,
+          "bird": 2,
+          "dog": 2
+        }
+      },
+      "motorcycle": {
+        "accepted": 44,
+        "of": 100,
+        "predicted": {
+          "automobile": 26,
+          "truck": 7,
+          "airplane": 4,
+          "frog": 3,
+          "cat": 2,
+          "bird": 1,
+          "horse": 1
+        }
+      },
+      "pickup_truck": {
+        "accepted": 92,
+        "of": 100,
+        "predicted": {
+          "automobile": 61,
+          "truck": 29,
+          "airplane": 2
+        }
+      },
+      "tractor": {
+        "accepted": 61,
+        "of": 100,
+        "predicted": {
+          "truck": 51,
+          "ship": 4,
+          "automobile": 3,
+          "cat": 1,
+          "deer": 1,
+          "airplane": 1
+        }
+      },
+      "wolf": {
+        "accepted": 78,
+        "of": 100,
+        "predicted": {
+          "cat": 41,
+          "dog": 31,
+          "deer": 3,
+          "bird": 1,
+          "frog": 1,
+          "horse": 1
+        }
+      }
+    },
+    "far": {
+      "bottle": {
+        "accepted": 35,
+        "of": 100,
+        "predicted": {
+          "cat": 18,
+          "ship": 7,
+          "bird": 4,
+          "truck": 3,
+          "airplane": 1,
+          "automobile": 1,
+          "frog": 1
+        }
+      },
+      "bowl": {
+        "accepted": 55,
+        "of": 100,
+        "predicted": {
+          "cat": 20,
+          "automobile": 8,
+          "ship": 8,
+          "frog": 8,
+          "bird": 4,
+          "dog": 4,
+          "airplane": 2,
+          "truck": 1
+        }
+      },
+      "chair": {
+        "accepted": 53,
+        "of": 100,
+        "predicted": {
+          "airplane": 31,
+          "bird": 7,
+          "truck": 6,
+          "cat": 5,
+          "ship": 1,
+          "horse": 1,
+          "deer": 1,
+          "automobile": 1
+        }
+      },
+      "clock": {
+        "accepted": 50,
+        "of": 100,
+        "predicted": {
+          "cat": 17,
+          "automobile": 12,
+          "truck": 6,
+          "ship": 6,
+          "bird": 4,
+          "airplane": 2,
+          "frog": 2,
+          "dog": 1
+        }
+      },
+      "keyboard": {
+        "accepted": 40,
+        "of": 100,
+        "predicted": {
+          "truck": 11,
+          "cat": 10,
+          "airplane": 7,
+          "frog": 4,
+          "bird": 4,
+          "horse": 2,
+          "ship": 1,
+          "automobile": 1
+        }
+      },
+      "mushroom": {
+        "accepted": 57,
+        "of": 100,
+        "predicted": {
+          "bird": 28,
+          "cat": 11,
+          "frog": 11,
+          "dog": 4,
+          "horse": 1,
+          "truck": 1,
+          "deer": 1
+        }
+      },
+      "sunflower": {
+        "accepted": 51,
+        "of": 100,
+        "predicted": {
+          "bird": 30,
+          "cat": 7,
+          "frog": 7,
+          "truck": 3,
+          "dog": 2,
+          "airplane": 1,
+          "deer": 1
+        }
+      },
+      "wardrobe": {
+        "accepted": 79,
+        "of": 100,
+        "predicted": {
+          "cat": 43,
+          "truck": 32,
+          "bird": 2,
+          "horse": 2
+        }
+      }
+    }
+  },
+  "failure_cases": [
+    {
+      "group": "near",
+      "position": 504,
+      "unknown_class": "bus",
+      "predicted": "truck",
+      "score": -11.4884614944458,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "near",
+      "position": 651,
+      "unknown_class": "camel",
+      "predicted": "cat",
+      "score": -10.78622055053711,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "near",
+      "position": 28,
+      "unknown_class": "fox",
+      "predicted": "cat",
+      "score": -10.980816841125488,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "near",
+      "position": 4,
+      "unknown_class": "leopard",
+      "predicted": "cat",
+      "score": -10.878716468811035,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "near",
+      "position": 244,
+      "unknown_class": "motorcycle",
+      "predicted": "automobile",
+      "score": -11.257894515991211,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "near",
+      "position": 730,
+      "unknown_class": "pickup_truck",
+      "predicted": "automobile",
+      "score": -12.035886764526367,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "near",
+      "position": 721,
+      "unknown_class": "tractor",
+      "predicted": "ship",
+      "score": -11.008027076721191,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "near",
+      "position": 483,
+      "unknown_class": "wolf",
+      "predicted": "deer",
+      "score": -11.069291114807129,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "far",
+      "position": 617,
+      "unknown_class": "bottle",
+      "predicted": "cat",
+      "score": -10.623266220092773,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "far",
+      "position": 229,
+      "unknown_class": "bowl",
+      "predicted": "cat",
+      "score": -11.948456764221191,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "far",
+      "position": 243,
+      "unknown_class": "chair",
+      "predicted": "airplane",
+      "score": -10.534982681274414,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "far",
+      "position": 380,
+      "unknown_class": "clock",
+      "predicted": "truck",
+      "score": -10.445717811584473,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "far",
+      "position": 299,
+      "unknown_class": "keyboard",
+      "predicted": "cat",
+      "score": -11.13012981414795,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "far",
+      "position": 293,
+      "unknown_class": "mushroom",
+      "predicted": "frog",
+      "score": -11.524645805358887,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "far",
+      "position": 236,
+      "unknown_class": "sunflower",
+      "predicted": "bird",
+      "score": -11.876175880432129,
+      "threshold": -5.994174885749816
+    },
+    {
+      "group": "far",
+      "position": 743,
+      "unknown_class": "wardrobe",
+      "predicted": "truck",
+      "score": -10.850170135498047,
+      "threshold": -5.994174885749816
+    }
+  ]
+}
