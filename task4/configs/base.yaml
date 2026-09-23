@@ -1,0 +1,7 @@
+seed: 6304
+batch_size: 128
+epochs: 100
+lr: 1.0e-1
+momentum: 0.9
+weight_decay: 5.0e-4
+num_workers: 2
