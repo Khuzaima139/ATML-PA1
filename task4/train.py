@@ -2,6 +2,7 @@ import argparse
 import json
 import random
 import time
+from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
@@ -12,10 +13,12 @@ from torch.utils.data import DataLoader
 from common.seed import get_device, set_seed
 from task4.data.cifar10 import cifar10, eval_transform, train_transform
 from task4.methods.gcsc import GCSC
+from task4.methods.proser import Proser, ProserNet
 from task4.methods.vanilla import Vanilla
 from task4.models.resnet_cifar import ResNetCIFAR
 
 ROOT = Path(__file__).resolve().parents[1]
+CKPT_DIR = ROOT / "checkpoints" / "task4"
 METHODS = {"vanilla": Vanilla, "gcsc": GCSC}
 
 
@@ -59,6 +62,17 @@ def accuracy(model, loader, device, max_batches=None):
     return 100 * correct / total
 
 
+def build(cfg):
+    if cfg["method"] != "proser":
+        return METHODS[cfg["method"]](), ResNetCIFAR()
+    model = ProserNet(cfg["num_dummy"])
+    ckpt = torch.load(CKPT_DIR / f"{cfg['init_from']}.pt", map_location="cpu")
+    missing, unexpected = model.load_state_dict(ckpt["model"], strict=False)
+    assert not unexpected and sorted(missing) == ["dummy.bias", "dummy.weight"], (missing, unexpected)
+    print(f"loaded {cfg['init_from']} checkpoint (epoch {ckpt['epoch']}), dummy head randomly initialised")
+    return Proser(cfg), model
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
@@ -66,21 +80,26 @@ def main():
     args = parser.parse_args()
 
     cfg = load_config(args.config)
-    method = METHODS[cfg["method"]]()
     device = get_device()
     workers = cfg["num_workers"] if device.type == "cuda" else 0
-    print(f"run {cfg['run']} on {device}, workers {workers}, randaugment {method.randaugment}")
 
     set_seed(cfg["seed"])
-    model = ResNetCIFAR().to(device)
+    method, model = build(cfg)
+    model = model.to(device)
+    print(f"run {cfg['run']} on {device}, workers {workers}, randaugment {method.randaugment}")
     train_loader = make_loader(cifar10("train", train_transform(method.randaugment)), cfg, True, workers, device)
     val_loader = make_loader(cifar10("val", eval_transform()), cfg, False, workers, device)
     opt = torch.optim.SGD(model.parameters(), lr=cfg["lr"], momentum=cfg["momentum"], weight_decay=cfg["weight_decay"])
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=cfg["epochs"])
 
+    init_acc = None
+    if "init_from" in cfg:
+        init_acc = accuracy(model, val_loader, device)
+        print(f"initial val acc {init_acc:.2f}", flush=True)
+
     max_batches = 20 if args.smoke else None
     epochs = 1 if args.smoke else cfg["epochs"]
-    ckpt_path = ROOT / "checkpoints" / "task4" / f"{cfg['run']}.pt"
+    ckpt_path = CKPT_DIR / f"{cfg['run']}.pt"
     out_path = ROOT / "task4" / "results" / f"{cfg['run']}_train.json"
     ckpt_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -91,6 +110,7 @@ def main():
         lr = opt.param_groups[0]["lr"]
         model.train()
         loss_sum = seen = 0
+        sums = defaultdict(float)
         for i, (x, y) in enumerate(train_loader):
             if max_batches and i == max_batches:
                 break
@@ -101,10 +121,13 @@ def main():
             opt.step()
             loss_sum += loss.item() * len(y)
             seen += len(y)
+            for k, v in getattr(method, "logs", {}).items():
+                sums[k] += v * len(y)
         sched.step()
         val_acc = accuracy(model, val_loader, device, max_batches)
-        row = {"epoch": epoch, "lr": lr, "train_loss": loss_sum / seen, "val_acc": val_acc,
-               "seconds": round(time.time() - start, 1)}
+        row = {"epoch": epoch, "lr": lr, "train_loss": loss_sum / seen,
+               **{k: v / seen for k, v in sums.items()},
+               "val_acc": val_acc, "seconds": round(time.time() - start, 1)}
         history.append(row)
         print(row, flush=True)
         if args.smoke:
@@ -114,7 +137,8 @@ def main():
             torch.save({"model": model.state_dict(), "epoch": epoch, "config": cfg}, ckpt_path)
             print(f"saved best checkpoint {ckpt_path}", flush=True)
         out_path.write_text(json.dumps(
-            {"config": cfg, "best_epoch": best_epoch, "best_val_acc": best_acc, "history": history}, indent=2))
+            {"config": cfg, "init_val_acc": init_acc, "best_epoch": best_epoch, "best_val_acc": best_acc,
+             "history": history}, indent=2))
 
 
 if __name__ == "__main__":
